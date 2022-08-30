@@ -2,18 +2,22 @@ from aiogram import Bot
 from aiogram import Dispatcher
 from aiogram import types
 from aiogram.utils import executor
+from aiogram.types import ReplyKeyboardRemove, \
+    ReplyKeyboardMarkup, KeyboardButton, \
+    InlineKeyboardMarkup, InlineKeyboardButton
 
 bot = Bot(token='5421165424:AAGqJ8qtmaRap3kpLr0KpJl7jAiTU-SZjRQ')
 
 dp = Dispatcher(bot)
 
-@dp.message_handler()
-async def get_message(message : types.Message):
+@dp.message_handler(commands=['start'])
+async def process_start_command(message: types.Message):
+    await message.reply(reply_markup=kb.greet_kb)
 
-    chat_id = message.chat.id
-    text = f'Hello, {message.from_user.full_name}'
+    button_hi = KeyboardButton('Привет! 👋')
 
-    await bot.send_message(chat_id=chat_id, text=text)
+    greet_kb = ReplyKeyboardMarkup()
+    greet_kb.add(button_hi)
 
 
 
